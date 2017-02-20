@@ -1,0 +1,80 @@
+<!--search-->
+<div class="row" ng-if="$root.tgUtils.angular.isDefined(hasSearch)">
+    <div class="col-lg-12">
+        <div class="row" style="margin:auto; text-align:center">
+            <div ng-class="{'col-lg-12' : $root.tgUtils.angular.isUndefined(hasPageSize), 'col-lg-9' : hasPageSize === true}">
+                <div class="input-icon">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <input type="text" class="form-control pull-left" placeholder="Search" ng-model="model.search">
+                </div>
+            </div>
+            <div class="col-lg-3" ng-if="$root.tgUtils.angular.isDefined(hasPageSize)">
+                <select class="form-control input-xsmall pull-right" ng-options="p for p in model.pageSizeList" ng-model="model.pageSize">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<!--table-->
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th ng-repeat="header in headers.split(',')" ng-if="$root.tgUtils.angular.isDefined(headers)">
+                        {{header}}
+                    </th>
+                    <th ng-repeat="(key, value) in collection[0]" ng-if="$root.tgUtils.angular.isUndefined(headers) || headers === ''">
+                        {{key}}
+                    </th>
+                    <th ng-if="$root.tgUtils.angular.isDefined(hasBasicActions)">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="item in collection | filter: model.search | itemsPerPage : model.pageSize" pagination-id="gridId" ng-if="collection.length > 0">
+                    <td ng-repeat="(key, value) in item" ng-if="$root.tgUtils.angular.isUndefined(fields) || fields === ''">
+                        {{item[key]}}
+                    </td>
+                    <td ng-repeat="field in fields.split(',')" ng-if="$root.tgUtils.angular.isDefined(fields)">
+                        {{item[field]}}
+                    </td>
+                    <td ng-if="$root.tgUtils.angular.isDefined(hasBasicActions) && $root.tgUtils.angular.isDefined(basicActions)">
+                        
+                        <span ng-repeat="(key, value) in basicActions">
+                            <i ng-class="basicActions[key].class" 
+                                title="{{basicActions[key].title}}" 
+                                ng-style="basicActions[key].style" 
+                                ng-click="OnClick_BasicAction(key, basicActions, item)">
+
+                            </i>
+                            &nbsp;
+                        </span>
+                    </td>
+                </tr>
+                <tr ng-if="collection.length <= 0">
+                    <td colspan="{{headers.split(',').length}}" ng-if="$root.tgUtils.angular.isDefined(headers)">
+                        <i>No Data</i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--pagination-->
+<div class="row">
+    <div class="col-lg-12">
+        <div style="margin:auto; text-align:center">
+            <dir-pagination-controls pagination-id="gridId"
+                                     boundary-links="true"
+                                     on-page-change="pageChangeHandler(newPageNumber)">
+            </dir-pagination-controls>
+        </div>
+    </div>
+</div>
+
