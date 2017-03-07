@@ -1,22 +1,36 @@
+
+<!--add-->
+<div class="row" ng-if="$root.tgUtils.angular.isDefined(hasAdd)">
+    <div class="col-lg-12">
+        <button class="pull-right"
+                ng-class="addProperties.class"
+                ng-style="addProperties.style"
+                ng-click="addProperties.click()">
+            <i ng-class="addProperties.icon"></i> &nbsp;{{addProperties.text}}
+        </button>
+    </div>
+</div>
+
+<br />
+
 <!--search-->
 <div class="row" ng-if="$root.tgUtils.angular.isDefined(hasSearch)">
-    <div class="col-lg-12">
-        <div class="row" style="margin:auto; text-align:center">
-            <div ng-class="{'col-lg-12' : $root.tgUtils.angular.isUndefined(hasPageSize), 'col-lg-9' : hasPageSize === true}">
-                <div class="input-icon">
-                    <i class="glyphicon glyphicon-search"></i>
-                    <input type="text" class="form-control pull-left" placeholder="Search" ng-model="model.search">
-                </div>
+    <div class="row" style="margin:auto; text-align:center">
+        <div ng-class="{'col-lg-12' : $root.tgUtils.angular.isUndefined(hasPageSize), 'col-lg-9' : hasPageSize === true}">
+            <div class="input-icon">
+                <i class="glyphicon glyphicon-search"></i>
+                <input type="text" class="form-control pull-left" placeholder="Search" ng-model="model.search">
             </div>
-            <div class="col-lg-3" ng-if="$root.tgUtils.angular.isDefined(hasPageSize)">
-                <select class="form-control input-xsmall pull-right" ng-options="p for p in model.pageSizeList" ng-model="model.pageSize">
-                </select>
-            </div>
+        </div>
+        <div class="col-lg-3" ng-if="$root.tgUtils.angular.isDefined(hasPageSize)">
+            <select class="form-control input-xsmall pull-right" ng-options="p for p in model.pageSizeList" ng-model="model.pageSize"></select>
         </div>
     </div>
 </div>
 
 <br/>
+
+
 
 <!--table-->
 <div class="row">
@@ -30,7 +44,7 @@
                     <th ng-repeat="(key, value) in collection[0]" ng-if="$root.tgUtils.angular.isUndefined(headers) || headers === ''">
                         {{key}}
                     </th>
-                    <th ng-if="$root.tgUtils.angular.isDefined(hasBasicActions)">
+                    <th ng-if="$root.tgUtils.angular.isDefined(hasBasicActions) && $root.tgUtils.angular.isDefined(basicActions)">
                         Actions
                     </th>
                 </tr>

@@ -18,15 +18,20 @@
                 gridId: '@',
                 hasSearch: '=?',
                 hasPageSize: '=?',
-                hasBasicAction: '=?',
                 hasBasicActions: '=?',
-                basicActions: '=?'
+                basicActions: '=?',
+                hasMultiSelect: '=?',
+                uniqueField: '@?',
+                pageSizeList: '=?',
+                defaultPageSize: '=?',
+                hasAdd: '=?',
+                addProperties: '=?'
             },
-            controller: ['$scope', '$rootScope', function($scope, $rootScope){
+            controller: ['$scope', '$rootScope', 'PageSizes', function($scope, $rootScope, PageSizes){
                 $scope.model = {
                     search: '',
-                    pageSizeList: [5,10,15,20],
-                    pageSize: 5
+                    pageSizeList: angular.isDefined($scope.pageSizeList) ? $scope.pageSizeList : PageSizes,
+                    pageSize: angular.isDefined($scope.defaultPageSize) ? $scope.defaultPageSize : 10
                 }
 
                 $scope.OnClick_BasicAction = OnClick_BasicAction;
